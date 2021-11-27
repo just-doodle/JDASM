@@ -1,0 +1,11 @@
+67 00 00
+JMP 51 00
+MEM 1A 03
+1A 01 00
+MEM 50 00
+mov A 1A
+mov X 1B
+mov Y 1C
+ADD Y A
+DEC X
+JNZ 60
