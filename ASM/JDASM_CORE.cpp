@@ -1,3 +1,20 @@
+// Copyright (C) 2021 arun007coder
+// 
+// This file is part of JDASM.
+// 
+// JDASM is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// JDASM is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with JDASM.  If not, see <http://www.gnu.org/licenses/>.
+
 #include "JDASM_CORE.h"
 
 JDASM::JDASM()
@@ -21,7 +38,6 @@ void JDASM::Assemble(char* filename, char* output)
     
     while (istream >> EX1 >> EX2 >> EX3)
     {
-        std::cout << "FST: " << EX1 << " SCE: " << EX2 << " TRD: " << EX3 << "\n";
         for (int i = 0; i != 1; i++)
 		{
 			AssemblerCore(EX1, EX2, EX3, output);
@@ -43,7 +59,7 @@ void  JDASM::AssemblerCore(char EX1[], char EX2[], char EX3[], char* out)
         std::cerr << "can't open output file" << std::endl;
     }
 
-    if(EX1[0] == 'm' && EX1[1] == 'o' && EX1[2] == 'v')
+    if(EX1[0] == 'M' && EX1[1] == 'O' && EX1[2] == 'V')
     {
         if (EX2[0] == 'X')
         {
@@ -66,7 +82,7 @@ void  JDASM::AssemblerCore(char EX1[], char EX2[], char EX3[], char* out)
             }
             else
             {
-                OutFile << ins.INS_MV << " " << EX3 << " " << ins.REG_X << "\n";
+                OutFile << ins.INS_MV << " " << ins.REG_X << " " << EX3 << "\n";
             }
         }
         else if (EX2[0] == 'Y')
@@ -112,7 +128,7 @@ void  JDASM::AssemblerCore(char EX1[], char EX2[], char EX3[], char* out)
             }
             else
             {
-                OutFile << ins.INS_MV << " " << EX3 << " " << ins.REG_A << "\n";
+                OutFile << ins.INS_MV << " " << ins.REG_A << " " << EX3 << "\n";
             }
         }
         else
@@ -141,60 +157,60 @@ void  JDASM::AssemblerCore(char EX1[], char EX2[], char EX3[], char* out)
     }
     else if(EX1[0] == 'J' && EX1[1] == 'M' && EX1[2] == 'P')
     {
-        OutFile << ins.INS_JMP << " " << EX2 << "\n";
+        OutFile << ins.INS_JMP << " " << EX2 << " "<< "00" << "\n";
     }
     else if (EX1[0] == 'J' && EX1[1] == 'N' && EX1[2] == 'Z')
     {
-        OutFile << ins.INS_JNZ << " " << EX2 << "\n";
+        OutFile << ins.INS_JNZ << " " << EX2 << " "<< "00" << "\n";
     }
     else if (EX1[0] == 'J' && EX1[1] == 'Z')
     {
-        OutFile << ins.INS_JZ << " " << EX2 << "\n";
+        OutFile << ins.INS_JZ << " " << EX2 << " " << "00" << "\n";
     }
     else if (EX1[0] == 'J' && EX1[1] == 'N' && EX1[2] == 'E')
     {
-        OutFile << ins.INS_JNE << " " << EX2 << "\n";
+        OutFile << ins.INS_JNE << " " << EX2 << " " << "00"<< "\n";
     }
     else if (EX1[0] == 'J' && EX1[1] == 'E')
     {
-        OutFile << ins.INS_JE << " " << EX2 << "\n";
+        OutFile << ins.INS_JE << " " << EX2 << " " << "00" << "\n";
     }
     else if (EX1[0] == 'D' && EX1[1] == 'E' && EX1[2] == 'C')
     {
         if(EX2[0] == 'X')
         {
-            OutFile << ins.INS_DEC << " " << ins.REG_X << "\n";
+            OutFile << ins.INS_DEC << " " << ins.REG_X << " " << "00" << "\n";
         }
         else if(EX2[0] == 'Y')
         {
-            OutFile << ins.INS_DEC << " " << ins.REG_Y << "\n";
+            OutFile << ins.INS_DEC << " " << ins.REG_Y << " "<< "00" << "\n";
         }
         else if(EX2[0] == 'A')
         {
-            OutFile << ins.INS_DEC << " " << ins.REG_A << "\n";
+            OutFile << ins.INS_DEC << " " << ins.REG_A << " "<< "00" << "\n";
         }
         else if(EX2[0] == 'Q')
         {
-            OutFile << ins.INS_DEC << " " << ins.REG_Q << "\n";
+            OutFile << ins.INS_DEC << " " << ins.REG_Q << " "<< "00" << "\n";
         }
     }
     else if (EX1[0] == 'I' && EX1[1] == 'N' && EX1[2] == 'C')
     {
         if(EX2[0] == 'X')
         {
-            OutFile << ins.INS_INC << " " << ins.REG_X << "\n";
+            OutFile << ins.INS_INC << " " << ins.REG_X << " "<< "00" << "\n";
         }
         else if(EX2[0] == 'Y')
         {
-            OutFile << ins.INS_INC << " " << ins.REG_Y << "\n";
+            OutFile << ins.INS_INC << " " << ins.REG_Y << " "<< "00" << "\n";
         }
         else if(EX2[0] == 'A')
         {
-            OutFile << ins.INS_INC << " " << ins.REG_A << "\n";
+            OutFile << ins.INS_INC << " " << ins.REG_A << " "<< "00" << "\n";
         }
         else if(EX2[0] == 'Q')
         {
-            OutFile << ins.INS_INC << " " << ins.REG_Q << "\n";
+            OutFile << ins.INS_INC << " " << ins.REG_Q << " "<< "00" << "\n";
         }
     }
     else if (EX1[0] == 'A' && EX1[1] == 'D' && EX1[2] == 'D')
@@ -323,9 +339,140 @@ void  JDASM::AssemblerCore(char EX1[], char EX2[], char EX3[], char* out)
             }
         }
     }
+    else if(EX1[0] == 'C' && EX1[1] == 'M' && EX1[2] == 'P' )
+    {
+        if(EX2[0] == 'X')
+        {
+            if(EX3[0] == 'Y')
+            {
+                OutFile << ins.INS_CMP << " " << ins.REG_X << " " << ins.REG_Y << "\n";
+            }
+            else if(EX3[0] == 'A')
+            {
+                OutFile << ins.INS_CMP << " " << ins.REG_X << " " << ins.REG_A << "\n";
+            }
+            else if(EX3[0] == 'Q')
+            {
+                OutFile << ins.INS_CMP << " " << ins.REG_X << " " << ins.REG_Q << "\n";
+            }
+            else
+            {
+                OutFile << ins.INS_CMP << " " << ins.REG_X << " " << EX3 << "\n";
+            }
+        }
+        else if(EX2[0] == 'Y')
+        {
+            if(EX3[0] == 'X')
+            {
+                OutFile << ins.INS_CMP << " " << ins.REG_Y << " " << ins.REG_X << "\n";
+            }
+            else if(EX3[0] == 'A')
+            {
+                OutFile << ins.INS_CMP << " " << ins.REG_Y << " " << ins.REG_A << "\n";
+            }
+            else if(EX3[0] == 'Q')
+            {
+                OutFile << ins.INS_CMP << " " << ins.REG_Y << " " << ins.REG_Q << "\n";
+            }
+            else
+            {
+                OutFile << ins.INS_CMP << " " << ins.REG_Y << " " << EX3 << "\n";
+            }
+        }
+        else if(EX2[0] == 'A')
+        {
+            if(EX3[0] == 'X')
+            {
+                OutFile << ins.INS_CMP << " " << ins.REG_A << " " << ins.REG_X << "\n";
+            }
+            else if(EX3[0] == 'Y')
+            {
+                OutFile << ins.INS_CMP << " " << ins.REG_A << " " << ins.REG_Y << "\n";
+            }
+            else if(EX3[0] == 'Q')
+            {
+                OutFile << ins.INS_CMP << " " << ins.REG_A << " " << ins.REG_Q << "\n";
+            }
+            else
+            {
+                OutFile << ins.INS_CMP << " " << ins.REG_A << " " << EX3 << "\n";
+            }
+        }
+        else if(EX2[0] == 'Q')
+        {
+            if(EX3[0] == 'X')
+            {
+                OutFile << ins.INS_CMP << " " << ins.REG_Q << " " << ins.REG_X << "\n";
+            }
+            else if(EX3[0] == 'Y')
+            {
+                OutFile << ins.INS_CMP << " " << ins.REG_Q << " " << ins.REG_Y << "\n";
+            }
+            else if(EX3[0] == 'A')
+            {
+                OutFile << ins.INS_CMP << " " << ins.REG_Q << " " << ins.REG_A << "\n";
+            }
+            else
+            {
+                OutFile << ins.INS_CMP << " " << ins.REG_Q << " " << EX3 << "\n";
+            }
+        }
+        else
+        {
+            if(EX3[0] == 'X')
+            {
+                OutFile << ins.INS_CMP << " " << EX2 << " " << ins.REG_X << "\n";
+            }
+            else if(EX3[0] == 'Y')
+            {
+                OutFile << ins.INS_CMP << " " << EX2 << " " << ins.REG_Y << "\n";
+            }
+            else if(EX3[0] == 'A')
+            {
+                OutFile << ins.INS_CMP << " " << EX2 << " " << ins.REG_A << "\n";
+            }
+            else if(EX3[0] == 'Q')
+            {
+                OutFile << ins.INS_CMP << " " << EX2 << " " << ins.REG_Q << "\n";
+            }
+        }
+
+    }
+    else if(EX1[0] == 'I' && EX1[1] == 'N' && EX1[2] == 'T')
+    {
+        OutFile << ins.INS_INT << " " << EX2 << " 00" <<  "\n";
+    }
+    else if(EX1[0] == 'S' && EX1[1] == 'T' && EX1[2] == 'I')
+    {
+        OutFile << ins.INS_STI << " " << "00 " << "00" <<  "\n";
+    }
+    else if(EX1[0] == 'C' && EX1[1] == 'L' && EX1[2] == 'I')
+    {
+        OutFile << ins.INS_CLI << " " << "00 " << "00" <<  "\n";
+    }
+    else if(EX1[0] == 'H' && EX1[1] == 'L' && EX1[2] == 'T')
+    {
+        OutFile << ins.INS_HLT << " " << "00 " << "00" <<  "\n";
+    }
+    else if(EX1[0] == 'N' && EX1[1] == 'O' && EX1[2] == 'P')
+    {
+        OutFile << ins.INS_NOP << " " << "00 " << "00" <<  "\n";
+    }
+    else if(EX1[0] == 'S' && EX1[1] == 'D' && EX1[2] == 'E')
+    {
+        OutFile << ins.INS_SDE << " " << "00 " << "00" <<  "\n";
+    }
+    else if(EX1[0] == 'N' && EX1[1] == 'D' && EX1[2] == 'E')
+    {
+        OutFile << ins.INS_NDE << " " << "00 " << "00" <<  "\n";
+    }
     else if (EX1[0] == 'M' && EX1[1] == 'E' && EX1[2] == 'M')
     {
         OutFile << ins.INS_MEM << " " << EX2 << " " << EX3 <<"\n";
+    }
+    else if (EX1[0] == '|')
+    {
+
     }
     else
     {
