@@ -16,6 +16,7 @@
 // along with JDASM.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "ASM/JDASM_CORE.h"
+#include "Include/PVARS.h"
 
 #define JDASM_VERSION "2.0.0"
 
@@ -36,15 +37,19 @@ int main(int argc, char** argv)
 {
     JDASM jdasm;
     int a;
-    if(GetEnv("VERBOSE") == "1")
+
+    std::cout << GetEnv("VERBOSE") << std::endl;
+    if(strcmp(GetEnv("VERBOSE"), "1") != 0)
     {
-        jdasm.verbose = true;
+        verbose = false;
+        std::cout << "Verbose mode is off" << std::endl;
     }
-    else if (GetEnv("VERBOSE") == "0")
+    else
     {
-        jdasm.verbose = false;
+        verbose = true;
+        std::cout << "Verbose mode is on" << std::endl;
     }
-    
+
     if (argc == 1)
     {
         std::cerr << "Assembling terminated\n\n" <<"Please provide a file to assemble" << std::endl;
@@ -66,6 +71,7 @@ int main(int argc, char** argv)
                 << "-o --output [Output Filename] : To change the output of the file.\n\n"
                 << "-v --version : To print the version.\n\n"
                 << "-h --help : To print this help.\n\n"
+                << "To print verbose mode, use the following command: export VERBOSE=1\n"
                 << "Example: jdasm test.jdasm\n";
     }
     else if (strcmp(argv[1], "-o") == 0 || strcmp(argv[1], "--output") == 0)

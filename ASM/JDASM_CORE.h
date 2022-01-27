@@ -23,6 +23,7 @@
 #include <fstream>
 #include <cstdint>
 #include <string.h>
+#include "../Include/PVARS.h"
 
 struct Instructions
 {
@@ -78,7 +79,6 @@ public:
     void AssemblerCore(char EX1[], char EX2[], char EX3[], char* out);
     void Dissaemble(char Filename[256]);
     void DissasmblerCore(char EX1[], char EX2[], char EX3[]);
-    bool verbose = false;
 };
 
 #endif
