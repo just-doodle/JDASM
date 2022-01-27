@@ -1,4 +1,4 @@
-SDE 00 00 | To enable | Debugging feature
+SDE 00 00
 STI 00 00
 JMP 50 00
 MEM 1A 60

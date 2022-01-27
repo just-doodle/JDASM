@@ -28,7 +28,6 @@ JDASM::~JDASM()
 void JDASM::Assemble(char* filename, char* output)
 {
     std::cout << "Assembling file: " << filename << std::endl;
-    std::cout << output << " " << "-o" << " " << output << std::endl;
     std::ifstream istream(filename);
     char EX1[] = "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
     char EX2[] = "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
@@ -49,8 +48,11 @@ void JDASM::Assemble(char* filename, char* output)
 void  JDASM::AssemblerCore(char EX1[], char EX2[], char EX3[], char* out)
 {
     Instructions ins;
-    std::cout <<  "Got file\n";
-    std::cout << EX1 << " " << EX2 << " " << EX3 << "\n";
+    if (verbose)
+    {
+        std::cout <<  "Got file\n";
+        std::cout << EX1 << " " << EX2 << " " << EX3 << "\n";
+    }
     std::ofstream OutFile;
     OutFile.open(out, std::ios::out | std::ios::app);
 
@@ -469,10 +471,6 @@ void  JDASM::AssemblerCore(char EX1[], char EX2[], char EX3[], char* out)
     else if (EX1[0] == 'M' && EX1[1] == 'E' && EX1[2] == 'M')
     {
         OutFile << ins.INS_MEM << " " << EX2 << " " << EX3 <<"\n";
-    }
-    else if (EX1[0] == '|')
-    {
-
     }
     else
     {

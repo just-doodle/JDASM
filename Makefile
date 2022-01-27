@@ -15,9 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with JDASM.  If not, see <http://www.gnu.org/licenses/>.
 
-CXXCOMPILER=g++
+CXX=g++
 DEBUGGER=gdb
-CXXFLAGS=-lstdc++ -x c++
+CXXFLAGS=-lstdc++ -x c++ -Wno-write-strings
 DEBUG_CXXFLAGS=-lstdc++ -x c++ -g
 FILES= \
 ASM/JDASM_CORE.cpp \
@@ -25,11 +25,11 @@ main.cpp
 
 Build/JDASM: $(FILES)
 	mkdir -p Build
-	$(CXXCOMPILER) $(CXXFLAGS) -o Build/JDASM $(FILES)
+	$(CXX) $(CXXFLAGS) -o Build/JDASM $(FILES)
 
 Build/JDASM_debug: $(FILES)
 	mkdir -p Build
-	$(CXXCOMPILER) $(DEBUG_CXXFLAGS) -o Build/JDASM_debug $(FILES)
+	$(CXX) $(DEBUG_CXXFLAGS) -o Build/JDASM_debug $(FILES)
 	objcopy --only-keep-debug Build/JDASM_debug JDASM_debug.debug
 	mv JDASM_debug.debug Build/JDASM_debug.debug
 

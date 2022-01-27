@@ -17,62 +17,60 @@
 
 #include "ASM/JDASM_CORE.h"
 
+#define JDASM_VERSION "2.0.0"
+
+char* GetEnv(const char* var) 
+{
+    char *val = std::getenv(var);
+    if ( val == nullptr ) 
+    {
+        return "";
+    }
+    else 
+    {
+        return val;
+    }
+}
+
 int main(int argc, char** argv)
 {
     JDASM jdasm;
     int a;
+    if(GetEnv("VERBOSE") == "1")
+    {
+        jdasm.verbose = true;
+    }
+    else if (GetEnv("VERBOSE") == "0")
+    {
+        jdasm.verbose = false;
+    }
+    
     if (argc == 1)
     {
         std::cerr << "Assembling terminated\n\n" <<"Please provide a file to assemble" << std::endl;
         return 0;
     }
-    if (argc == 2)
+    else if (strcmp(argv[1], "--version") != 0 && strcmp(argv[1], "--help") != 0 && strcmp(argv[1], "-h") != 0 && strcmp(argv[1], "-o") != 0 && strcmp(argv[1], "--output") != 0 && strcmp(argv[1], "-v") != 0 && strcmp(argv[1], "--verbose") != 0)
     {
-        if(strcmp(argv[1], "-o") == false && strcmp(argv[1], "--output") == false && strcmp(argv[1], "--version") == false && strcmp(argv[1], "-v") == false && strcmp(argv[1], "--help") == false && strcmp(argv[1], "-h") == false )
-        {
-            //jdasm.Assemble(argv[1], "out.exrom");
-        }
-        else if (strcmp(argv[1], "--version") == 0 || strcmp(argv[1], "-v") == 0)
-        {
-            std::cout << "JDASM version 1.1.5" << std::endl;
-        }
-        else if(strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-h") == 0)
-        {
-            std::cout << "JDASM is a simple assembler for the JDASM language which is used in JD1618.\n\n"
-                    << "Usage: jdasm [filename] [options]\n"
-                    << "Options:\n"
-                    << "-o --output : To change the output of the file.\n\n"
-                    << "-v --version : To print the version.\n\n"
-                    << "-h --help : To print this help.\n\n"
-                    << "Example: jdasm test.jdasm\n";
-        }
+        jdasm.Assemble(argv[1], "out.exrom");
     }
-    for (int i = 2; i < argc; i++)
+    else if (strcmp(argv[1], "--version") == 0 || strcmp(argv[1], "-v") == 0)
     {
-        if (strcmp(argv[i], "-o") == 0 && strcmp(argv[i], "--output") == 0)
-        {
-            jdasm.Assemble(argv[1],argv[i + 1]);
-            a = i;
-        }
-        else if (strcmp(argv[i], "--version") == 0 || strcmp(argv[i], "-v") == 0)
-        {
-            std::cout << "JDASM version 1.1.5" << std::endl;
-        }
-        else if(strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-h") == 0)
-        {
-            std::cout << "JDASM is a simple assembler for the JDASM language which is used in JD1618.\n\n"
-                    << "Usage: jdasm [filename] [options]\n"
-                    << "Options:\n"
-                    << "-o --output : To change the output of the file.\n\n"
-                    << "-v --version : To print the version.\n\n"
-                    << "-h --help : To print this help.\n\n"
-                    << "Example: jdasm test.jdasm\n";
-        }
-        else
-        {
-            if (a + 1 != i)
-                jdasm.Assemble(argv[1], "out.exrom");
-        }
+        std::cout << "JDASM version " << JDASM_VERSION << std::endl;
+    }
+    else if(strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-h") == 0)
+    {
+        std::cout << "JDASM is a simple assembler for the JDASM language which is used in JD1618.\n\n"
+                << "Usage: jdasm [options] [filename]\n"
+                << "Usage: jdasm [filename]\n"
+                << "-o --output [Output Filename] : To change the output of the file.\n\n"
+                << "-v --version : To print the version.\n\n"
+                << "-h --help : To print this help.\n\n"
+                << "Example: jdasm test.jdasm\n";
+    }
+    else if (strcmp(argv[1], "-o") == 0 || strcmp(argv[1], "--output") == 0)
+    {
+        jdasm.Assemble(argv[3],argv[2]);
     }
 
     return 0;
