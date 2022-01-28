@@ -28,6 +28,7 @@ JDASM::~JDASM()
 void JDASM::Assemble(char* filename, char* output)
 {
     std::cout << "Assembling file: " << filename << std::endl;
+    std::remove(output);
     std::ifstream istream(filename);
     char EX1[] = "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
     char EX2[] = "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
@@ -131,6 +132,56 @@ void  JDASM::AssemblerCore(char EX1[], char EX2[], char EX3[], char* out)
             else
             {
                 OutFile << ins.INS_MV << " " << ins.REG_A << " " << EX3 << "\n";
+            }
+        }
+        else if (EX2[0] == 'Q')
+        {
+            if (EX3[0] == 'X')
+            {
+                OutFile << ins.INS_MV << " " << ins.REG_Q << " " << ins.REG_X << "\n";
+            }
+            else if (EX3[0] == 'Y')
+            {
+                OutFile << ins.INS_MV << " " << ins.REG_Q << " " << ins.REG_Y << "\n";
+            }
+            else if (EX3[0] == 'A')
+            {
+                OutFile << ins.INS_MV << " " << ins.REG_Q << " " << ins.REG_A << "\n";
+            }
+            else if (EX3[0] == 'K')
+            {
+                OutFile << ins.INS_MV << " " << ins.REG_Q << " " << ins.REG_K << "\n";
+            }
+            else
+            {
+                OutFile << ins.INS_MV << " " << ins.REG_Q << " " << EX3 << "\n";
+            }
+        }
+        else if (EX2[0] == 'O' && EX2[1] == 'F')
+        {
+            if (EX3[0] == 'X')
+            {
+                OutFile << ins.INS_MV << " " << ins.REG_OF << " " << ins.REG_X << "\n";
+            }
+            else if (EX3[0] == 'Y')
+            {
+                OutFile << ins.INS_MV << " " << ins.REG_OF << " " << ins.REG_Y << "\n";
+            }
+            else if (EX3[0] == 'A')
+            {
+                OutFile << ins.INS_MV << " " << ins.REG_OF << " " << ins.REG_A << "\n";
+            }
+            else if (EX3[0] == 'Q')
+            {
+                OutFile << ins.INS_MV << " " << ins.REG_OF << " " << ins.REG_Q << "\n";
+            }
+            else if (EX3[0] == 'K')
+            {
+                OutFile << ins.INS_MV << " " << ins.REG_OF << " " << ins.REG_K << "\n";
+            }
+            else
+            {
+                OutFile << ins.INS_MV << " " << ins.REG_OF << " " << EX3 << "\n";
             }
         }
         else

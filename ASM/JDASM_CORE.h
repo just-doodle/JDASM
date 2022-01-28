@@ -63,6 +63,7 @@ struct Instructions
     char* REG_Y = "03"; // Register Y
     char* REG_Q = "04"; // Register Q
     char* REG_K = "05"; // Register K
+    char* REG_OF = "06"; // Register OL
 
     char* INS_MEM = "60";
     char* COM = "|";

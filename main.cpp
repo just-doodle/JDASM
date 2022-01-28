@@ -18,7 +18,7 @@
 #include "ASM/JDASM_CORE.h"
 #include "Include/PVARS.h"
 
-#define JDASM_VERSION "2.0.0"
+#define JDASM_VERSION "2.4.0"
 
 char* GetEnv(const char* var) 
 {
